@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>مولد رابط واتساب</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 40px;
+      background-color: #f2f2f2;
+    }
+    input, textarea {
+      width: 80%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #25D366;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>مولد رابط واتساب</h2>
+
+  <input type="text" id="phone" placeholder="أدخل رقم الهاتف (بدون +)" />
+  <br>
+  <textarea id="message" placeholder="أدخل الرسالة المسبقة..."></textarea>
+  <br>
+  <button onclick="generateLink()">توليد الرابط</button>
+
+  <div id="output"></div>
+
+  <script>
+    function generateLink() {
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if (!phone) {
+        alert("الرجاء إدخال رقم الهاتف");
+        return;
+      }
+      const encodedMessage = encodeURIComponent(message);
+      const link = `https://wa.me/${phone}?text=${encodedMessage}`;
+      document.getElementById('output').innerHTML = `
+        <p>رابط واتساب:</p>
+        <a href="${link}" target="_blank">${link}</a>
+      `;
+    }
+  </script>
+
+</body>
+</html>
