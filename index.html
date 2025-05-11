@@ -5,29 +5,42 @@
   <title>مولد رابط واتساب</title>
   <style>
     body {
-      font-family: Arial;
+      font-family: Tahoma, sans-serif;
       text-align: center;
       padding: 40px;
-      background-color: #f2f2f2;
+      background-color: #f0f8ff;
     }
     input, textarea {
       width: 80%;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 12px;
       border: 1px solid #ccc;
+      font-size: 16px;
     }
     button {
-      padding: 10px 20px;
+      padding: 12px 20px;
       border: none;
       background-color: #25D366;
       color: white;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
+      font-size: 16px;
     }
     #output {
       margin-top: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
       word-break: break-all;
+    }
+    #copy-btn {
+      margin-top: 10px;
+      background-color: #007bff;
     }
   </style>
 </head>
@@ -35,13 +48,18 @@
 
   <h2>مولد رابط واتساب</h2>
 
-  <input type="text" id="phone" placeholder="أدخل رقم الهاتف (بدون +)" />
+  <input type="text" id="phone" placeholder="أدخل رقم الهاتف (مثال: 2499xxxxxxx)" />
   <br>
-  <textarea id="message" placeholder="أدخل الرسالة المسبقة..."></textarea>
+  <textarea id="message" placeholder="أدخل الرسالة..."></textarea>
   <br>
   <button onclick="generateLink()">توليد الرابط</button>
 
-  <div id="output"></div>
+  <div id="output" style="display:none;">
+    <p><strong>رابط واتساب:</strong></p>
+    <a id="link" href="#" target="_blank"></a>
+    <br>
+    <button id="copy-btn" onclick="copyLink()">نسخ الرابط</button>
+  </div>
 
   <script>
     function generateLink() {
@@ -53,10 +71,20 @@
       }
       const encodedMessage = encodeURIComponent(message);
       const link = `https://wa.me/${phone}?text=${encodedMessage}`;
-      document.getElementById('output').innerHTML = `
-        <p>رابط واتساب:</p>
-        <a href="${link}" target="_blank">${link}</a>
-      `;
+      const linkElement = document.getElementById('link');
+      linkElement.href = link;
+      linkElement.textContent = link;
+
+      document.getElementById('output').style.display = 'block';
+    }
+
+    function copyLink() {
+      const link = document.getElementById('link').textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("تم نسخ الرابط بنجاح ✅");
+      }, () => {
+        alert("حدث خطأ أثناء النسخ ❌");
+      });
     }
   </script>
 
